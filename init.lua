@@ -253,6 +253,20 @@ require('lazy').setup({
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
+      on_attach = function()
+        local gitsigns = require 'gitsigns'
+        local map = function(key, func, desc)
+          vim.keymap.set('n', string.format('<leader>h%s', key), func, desc)
+          vim.keymap.set('v', string.format('<leader>h%s', key), func, desc)
+        end
+
+        map('b', gitsigns.blame_line, { desc = 'blame line' })
+        map('s', gitsigns.select_hunk, { desc = 'select current hunk' })
+        map('r', gitsigns.reset_hunk, { desc = 'reset current hunk' })
+        map('v', gitsigns.preview_hunk, { desc = 'view current hunk' })
+        map('n', gitsigns.next_hunk, { desc = 'next hunk' })
+        map('p', gitsigns.prev_hunk, { desc = 'previous hunk' })
+      end,
     },
   },
 
