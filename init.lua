@@ -586,7 +586,9 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {
+          mason = false,
+        },
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -915,7 +917,32 @@ require('lazy').setup({
       },
     },
   },
-
+  {
+    'ThePrimeagen/refactoring.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    config = function()
+      require('refactoring').setup()
+    end,
+    opts = function()
+      local refactoring = require 'refactoring'
+      vim.keymap.set('x', '<leader>re', ':Refactor extract ', { desc = 'Extract Function' })
+      vim.keymap.set('x', '<leader>rv', ':Refactor extract_var ', { desc = 'Extract Variable' })
+      vim.keymap.set('x', '<leader>rb', ':Refactor extract_block ', { desc = 'Extract Block' })
+    end,
+  },
+  {
+    'ThePrimeagen/vim-apm',
+    config = function()
+      local apm = require 'vim-apm'
+      apm:setup {}
+      vim.keymap.set('n', '<leader>apm', function()
+        apm:toggle_monitor()
+      end)
+    end,
+  },
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
   -- place them in the correct locations.
@@ -962,3 +989,5 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+vim.o.shiftwidth = 4
+vim.o.tabstop = 4
