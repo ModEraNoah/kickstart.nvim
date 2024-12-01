@@ -401,6 +401,11 @@ require('lazy').setup({
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
         --   },
         -- },
+        defaults = {
+          file_ignore_patterns = {
+            'node_modules',
+          },
+        },
         -- pickers = {}
         extensions = {
           ['ui-select'] = {
@@ -1042,3 +1047,7 @@ require('lazy').setup({
 -- vim: ts=2 sts=2 sw=2 et
 vim.o.shiftwidth = 4
 vim.o.tabstop = 4
+
+-- latex
+vim.keymap.set('i', '<C-t>', '\\item ')
+vim.keymap.set('n', '<C-l>', 'o\\begin{itemize}\n\n\\end{itemize}<Esc><Up>i<Tab>\\item ')
